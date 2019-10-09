@@ -1,0 +1,101 @@
+<br>
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-center">
+            <div class="dropdown">
+                <button class=" text-dark text-center btn btn-info btn-block" type="button" id="admin-trainerUser-dropdown-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <h5 class="admin-userTrainer-toggle-header">choose <span class="fa fa-arrow-circle-down"></span></h5> 
+                </button>
+                <div class="dropdown-menu trainerUser-dropdown-menu" aria-labelledby="admin-trainerUser-dropdown-button">
+                    <a class="dropdown-item text-dark" (click)="this.trainerUser = 2" ><span class="fa fa-user"></span> Users</a>
+                    <a class="dropdown-item text-dark" (click)="this.trainerUser = 3" ><span class="fa fa-user-secret"></span> Trainers</a>
+                </div>
+            </div>
+            <table class="table table-borderless table-striped trainerUser-list">
+                <tbody *ngFor="let name of names">
+                    <tr *ngIf="name.role == this.trainerUser "><td><a href=""> {{ name.name }} </a></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 text-center">
+            <div class="row justify-content-center">
+                <div class="btn-group-sm">
+                    <button class="btn btn-secondary">Edit</button>
+                    <button class="btn btn-danger">Delete</button>
+                    <button class="btn btn-success">Pay</button>
+                </div>
+            </div>
+            <br>
+            <div class="row justify-content-center">
+                <form>
+                    <div class="row ">
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center">
+                            <img src="abc.png" alt="" width="100px" height="100px">
+                        </div>
+                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10" id="trainer-details-form">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                <label for="inputEmail4">Email</label>
+                                <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                                </div>
+                                <div class="form-group col-md-6">
+                                <label for="inputPassword4">Password</label>
+                                <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAddress">Address</label>
+                                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAddress2">Address 2</label>
+                                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                <label for="inputCity">City</label>
+                                <input type="text" class="form-control" id="inputCity">
+                                </div>
+                                <div class="form-group col-md-4">
+                                <label for="inputState">State</label>
+                                <select id="inputState" class="form-control">
+                                    <option selected>Choose...</option>
+                                    <option>...</option>
+                                </select>
+                                </div>
+                                <div class="form-group col-md-2">
+                                <label for="inputZip">Zip</label>
+                                <input type="text" class="form-control" id="inputZip">
+                                </div>
+                            </div>
+                            <div id="cource-input-holder">
+                            <div class="form-row">
+                                <div class="form-group col-md-7">
+                                <label for="inputCity">Cources</label>
+                                    <select id="inputState" class="form-control">
+                                        <option selected>Choose Cource...</option>
+                                        <option value="Java">Java</option>
+                                        <option value="Python">Python</option>
+                                        <option value="Node">Node</option>
+                                        <option value="Spring">Spring</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputState">Fee</label>
+                                    <input type="number" class="form-control" placeholder="$">
+                                </div>
+                                <div class="form-group col-md-1">
+                                    <label for="add-more-button">Add</label>
+                                    <button type="button" class="form-control" id="add-more-button"><span class="fa fa-plus"></span></button>
+                                </div>
+                            </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<br>

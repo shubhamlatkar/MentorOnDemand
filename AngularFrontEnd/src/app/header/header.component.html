@@ -1,0 +1,36 @@
+<header class="">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark ">
+        <a href="#" class="navbar-brand" type="button" data-toggle="modal" data-target="#myWarning"><h3 class="">My Site</h3></a>
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupported">
+            <span class="fa fa-2x fa-bars"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupported">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active"><a href="#" class="nav-link" type="button" data-toggle="modal" data-target="#myWarning"><span class="fa fa-home"></span> Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link" type="button" data-toggle="modal" data-target="#myWarning"><i class="fa fa-user-circle"></i> About Us</a></li>
+                <li class="nav-item dropdown">
+                    <a href="#" id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="fa fa-phone-square"></span> Contact Us <span class="caret"></span>
+                    </a>
+                    
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a href="#" class="dropdown-item" type="button" data-toggle="modal" data-target="#myWarning"><span class="fa fa-mail-bulk"></span> Email</a>
+                        <a href="#" class="dropdown-item" type="button" data-toggle="modal" data-target="#myWarning"><span class="fa fa-phone"></span> Phone</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item" type="button" data-toggle="modal" data-target="#myWarning"><span class="fa fa-user"></span> Schedule Appointment</a>                       
+                    </div>
+                </li>      
+            </ul>    
+            <!-- <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" arial-label="Search">
+                <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>           -->
+            <button id="logIn-logOut-button" [routerLink]="'/login'" class="btn btn-outline-secondary">
+                <span class="fa fa-sign-in" id="sign-InOut-Icon"></span>&nbsp;
+                <label id="signInLabel">{{ signInButtonText }}</label>
+            </button>
+        </div>
+    </nav>
+</header>
