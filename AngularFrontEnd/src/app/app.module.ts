@@ -13,11 +13,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TrainerFilterPipe } from './trainer-filter.pipe';
 import { FormsModule }    from '@angular/forms';
-import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from  '@angular/material';
 import { AdminComponent } from './admin/admin.component';
 import { TrainerComponent } from './trainer/trainer.component';
 import { UserComponent } from './user/user.component';
-import { ObjectServiceService } from './object-service.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'; 
 import { InterceptService } from './intercept.service';
 
@@ -52,7 +50,7 @@ const appRoutes: Routes = [
         HttpClientModule 
   ],
   
-  providers: [ObjectServiceService, {
+  providers: [, {
     provide:HTTP_INTERCEPTORS,
     useClass:InterceptService,
     multi:true

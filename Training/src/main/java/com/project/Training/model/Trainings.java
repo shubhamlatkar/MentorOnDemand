@@ -12,12 +12,12 @@ public class Trainings {
 	private int paymentCompleted;
 	private long mentorId;
 	private String name;
+	
 	public Trainings() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-
 	public Trainings(long id, float fee, int courceCompleted, int paymentCompleted, long mentorId, String name) {
 		super();
 		this.id = id;

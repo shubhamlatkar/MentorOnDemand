@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ObjectServiceService } from '../object-service.service';
-import { Trainings } from '../trainings';
+import { ObjectServiceService } from '../Services/object-service.service';
 import { HttpClient } from '@angular/common/http';
-import { Users } from '../Users';
+import { UserObj } from '../user/UserObj';
+import { LogInSignUpService } from '../Services/log-in-sign-up.service';
+import { Training } from '../Models/Training';
+import { UserService } from '../Services/user.service';
+import { TrainerService } from '../Services/trainer.service';
+import { User } from 'src/app/Models/User';
+import { Cources } from '../Models/Cources';
+import { TrainingService } from '../Services/training.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,32 +18,34 @@ import { Users } from '../Users';
 
 export class DashboardComponent implements OnInit {
 
-    onClick(event: any) {
-        this.searchTerm = event.target.innerText;
-        this.searchTerm = this.searchTerm.trim();
-    }
-    public names : Trainings[];
-    public user: Users = {
-      "id": 1,
-    "name": "",
-    "occ": "",
-    "univ": "",
-    "exp": "",
-    "role": 2,
-    "expertArea": ""
-    };
-    trainerOptions: string = 'currentTraining';
-    openend: boolean = false;
-    searchTerm: string;
-  constructor(private _objService: ObjectServiceService, private http: HttpClient) {
-    
+  onClick(event: any) {
+      this.searchTerm = event.target.innerText;
+      this.searchTerm = this.searchTerm.trim();
   }
+  public trainings : Training[];
+  public user: UserObj;
+  public trainers: User[];
+  public cources: Cources[];
+  
+  trainerOptions: string = 'currentTraining';
+  openend: boolean = false;
+  searchTerm: string;
+  
+  constructor(private _objService: ObjectServiceService,private _trainingService: TrainingService, private http: HttpClient, private _loginService:LogInSignUpService, private _trainerService: TrainerService) {  }
   
   ngOnInit() {
-    this._objService.getUsers().subscribe(data => {
-        this.names = data; 
+    this._objService.getTrainings().subscribe(data => {
+      this.trainings = data; 
     });
-    // this._objService.temObj.subscribe(data => this.user = data);
+    this._loginService.temObj.subscribe(data => {
+      this.user = data;
+    })
+    this._trainerService.getTrainers().subscribe(data => {
+      this.trainers = data; 
+    });
+    this._trainingService.getCources().subscribe(data => {
+      this.cources = data;
+    });
   }
   regsiter() {
 

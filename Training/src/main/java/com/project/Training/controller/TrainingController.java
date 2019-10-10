@@ -41,8 +41,8 @@ public class TrainingController {
 	@Autowired
 	RestTemplate restTemplate;
 	
-	@GetMapping(value = "/get")
-	public ResponseEntity<List<TrainingDto>> getAll() {
+	@GetMapping(value = "/getCources")
+	public ResponseEntity<List<TrainingDto>> getCources() {
 		List<TrainingDto> trainings = new ArrayList<TrainingDto>();
 		trainingDao.findAll().forEach(data -> {
 			HttpHeaders headers = new HttpHeaders();

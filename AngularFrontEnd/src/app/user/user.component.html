@@ -31,7 +31,7 @@
             <h2>Welcome to My Site!</h2>
         </div>
         <div class="row justify-content-end">    
-            <h3>Hi {{ tem.name }}You are registered as a user </h3>
+            <h3>Hi {{ user.username }}You are registered as a user </h3>
         </div>
         <div class="row justify-content-end">    
             <button class="btn btn-lg btn-success" (click)="userReset()" id="start">Choose new Course</button>
@@ -46,19 +46,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>You have the payment notification</td>
-                </tr>
-                <tr>
-                    <td>You have course reminder</td>
-                </tr>
-                <tr>
-                    <td>You have trainer missed call!!</td>
+                <tr *ngFor="let i of currentNotifications">
+                    <td>{{i.msg}}</td>
                 </tr>
             </tbody>
         </table>
     </section>
     <section *ngIf=" userOptions == 'payment' " class="container">
+    <div >
         <table class="table table-dark table-bordered table-striped">
             <tr class="text-center">
                 <th>
@@ -68,31 +63,17 @@
                     Payments
                 </th>
             </tr>
-            <tr>
-                <td>
-                    Spring
+            <tr *ngFor="let i of currentPayments" >
+                <td *ngIf="i.completed == i.total">
+                    {{ i.name }}
                 </td>
-                <td>
-                    1000$
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Spring
-                </td>
-                <td>
-                    1000$
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Spring
-                </td>
-                <td>
-                    1000$
+                <td *ngIf="i.completed == i.total">
+                    {{i.total}}$
                 </td>
             </tr>
         </table>
+    </div>
+    <div >    
         <table class="table table-dark table-bordered table-striped">
             <tr class="text-center">
                 <th>
@@ -108,49 +89,22 @@
                     Total Payment
                 </th>
             </tr>
-            <tr>
-                <th>
-                    Spring
-                </th>
-                <th>
-                    100$
-                </th>
-                <th>
-                    900$
-                </th>
-                <th>
-                    100$
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    Spring
-                </th>
-                <th>
-                    100$
-                </th>
-                <th>
-                    900$
-                </th>
-                <th>
-                    100$
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    Spring
-                </th>
-                <th>
-                    100$
-                </th>
-                <th>
-                    900$
-                </th>
-                <th>
-                    100$
-                </th>
+            <tr *ngFor="let i of currentPayments" >
+                <td *ngIf="i.completed != i.total">
+                    {{i.cource}}
+                </td>
+                <td *ngIf="i.completed != i.total">
+                    {{i.completed}}$
+                </td>
+                <td *ngIf="i.completed != i.total">
+                    {{i.remaning}}$
+                </td>
+                <td *ngIf="i.completed != i.total">
+                    {{i.total}}$
+                </td>
             </tr>
         </table>
+    </div>    
     </section>
     <section *ngIf=" userOptions == 'completedTrainings' ">
         <section class="container">
@@ -255,25 +209,25 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                         <label for="inputEmail4">Email</label>
-                        <input type="email" class="form-control" id="inputEmail4" placeholder="{{trainers.email}}">
+                        <input type="email" class="form-control" id="inputEmail4" placeholder="{{currentUser.email}}" value="{{currentUser.email}}"> 
                         </div>
                         <div class="form-group col-md-6">
                         <label for="inputPassword4">name</label>
-                        <input type="text" class="form-control" id="inputPassword4" placeholder="{{trainers.name}}">
+                        <input type="text" class="form-control" id="inputPassword4" placeholder="{{currentUser.name}}" value="{{currentUser.name}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputAddress">Address</label>
-                        <input type="text" class="form-control" id="inputAddress" placeholder="{{trainers.address}}">
+                        <input type="text" class="form-control" id="inputAddress" placeholder="{{currentUser.address}}" value="{{currentUser.address}}">
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                         <label for="inputCity">City</label>
-                        <input type="text" class="form-control" id="inputCity" placeholder="{{trainers.city}}">
+                        <input type="text" class="form-control" id="inputCity" placeholder="{{currentUser.city}}" value="{{currentUser.city}}">
                         </div>
                         <div class="form-group col-md-4">
                         <label for="inputState">State</label>
-                        <input type="text" class="form-control" id="inputState" placeholder="{{trainers.state}}">                        
+                        <input type="text" class="form-control" id="inputState" placeholder="{{currentUser.state}}" value="{{currentUser.state}}">                        
                         </div>
                         <div class="form-group col-md-2">
                         <label for="inputZip">Zip</label>
@@ -284,11 +238,11 @@
                     <div class="form-row">
                         <div class="form-group col-md-7">
                             <label for="inputCource">Cources</label>
-                            <input type="text" class="form-control" id="inputCource" placeholder="{{trainers.skills}}">
+                            <input type="text" class="form-control" id="inputCource" placeholder="{{currentUser.skill}}" value="{{currentUser.skill}}">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="inputState">Fee</label>
-                            <input type="number" class="form-control" placeholder="{{trainers.fee}}$">
+                            <input type="number" class="form-control" placeholder="{{currentUser.fee}}$" value="{{currentUser.fee}}">
                         </div>
                         <div class="form-group col-md-1">
                             <label for="add-more-button">Add</label>

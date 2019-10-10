@@ -1,4 +1,4 @@
-export interface Trainings
+export interface Training
  {
     id : number;
 	fee : number;

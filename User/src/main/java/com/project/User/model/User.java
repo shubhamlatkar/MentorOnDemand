@@ -11,18 +11,27 @@ public class User {
 	private long id;
 	@Email
 	private String email;
-	private String username;
-	private int age;
+	private String name;
+	private String address;
+	private String city;
+	private String state;
+	private String skill;
+	private int fee;
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public User(long id, @Email String email, String username, int age) {
+	public User(long id, @Email String email, String name, String address, String city, String state, String skill,
+			int fee) {
 		super();
 		this.id = id;
 		this.email = email;
-		this.username = username;
-		this.age = age;
+		this.name = name;
+		this.address = address;
+		this.city = city;
+		this.state = state;
+		this.skill = skill;
+		this.fee = fee;
 	}
 	public long getId() {
 		return id;
@@ -36,20 +45,45 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getUsername() {
-		return username;
+	public String getName() {
+		return name;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public int getAge() {
-		return age;
+	public String getAddress() {
+		return address;
 	}
-	public void setAge(int age) {
-		this.age = age;
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getSkill() {
+		return skill;
+	}
+	public void setSkill(String skill) {
+		this.skill = skill;
+	}
+	public int getFee() {
+		return fee;
+	}
+	public void setFee(int fee) {
+		this.fee = fee;
 	}
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", username=" + username + ", age=" + age + "]";
+		return "User [id=" + id + ", email=" + email + ", name=" + name + ", address=" + address + ", city=" + city
+				+ ", state=" + state + ", skill=" + skill + ", fee=" + fee + "]";
 	}
 }
