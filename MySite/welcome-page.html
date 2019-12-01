@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel='shortcut icon' href='assets/Images/Home.png' type='image/x-icon'/>
+	<title>My Site Different Pages</title>	
+
+    <!-- <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/vendor/FontAwesome/fa-all.min.css">
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    Popper JS
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    
+    Latest compiled JavaScript Links
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/vendor/FontAwesome/fa-all.min.js"></script>
+    
+    Custom styles for this template
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
+
+    <!--Stylesheets-->
+    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">        
+    <link rel="stylesheet" type="text/css" href="assets/vendor/FontAwesome/fa-all.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/vendor/FontAwesome/fa-all.min.css">
+    <!-- Custom Css -->        
+    <link rel="stylesheet" type="text/css" href="assets/CustomCss/custom-css.css">
+    <!--Scripts -->
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/vendor/PooperJs/popper.min.js"></script>
+    <script type="text/javascript" src="assets/vendor/FontAwesome/fa-all.min.js"></script>
+    <!--Custom JS-->
+    <script type="text/javascript" src="assets/CustomJS/custom-js.js"></script>
+
+</head>
+<body>
+    <header class="">
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark ">
+            <a href="#" class="navbar-brand" type="button" data-toggle="modal" data-target="#myWarning"><h3 class="">My Site</h3></a>
+            
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupported">
+                <span class="fa fa-2x fa-bars"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupported">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active"><a href="#" class="nav-link" type="button" data-toggle="modal" data-target="#myWarning"><span class="fa fa-home"></span> Home</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" type="button" data-toggle="modal" data-target="#myWarning"><i class="fa fa-user-circle"></i> About Us</a></li>
+                    <li class="nav-item dropdown">
+                        <a href="#" id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="fa fa-phone-square"></span> Contact Us <span class="caret"></span>
+                        </a>
+                        
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a href="#" class="dropdown-item" type="button" data-toggle="modal" data-target="#myWarning"><span class="fa fa-mail-bulk"></span> Email</a>
+                            <a href="#" class="dropdown-item" type="button" data-toggle="modal" data-target="#myWarning"><span class="fa fa-phone"></span> Phone</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item" type="button" data-toggle="modal" data-target="#myWarning"><span class="fa fa-user"></span> Schedule Appointment</a>                       
+                        </div>
+                    </li>      
+                </ul>    
+                <!-- <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" arial-label="Search">
+                    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+                </form>           -->
+                <button id="logIn-logOut-button" class="btn btn-outline-secondary">
+                    <span class="fa fa-sign-in-alt" id="sign-InOut-Icon"></span>&nbsp;
+                    <label id="signInLabel">Sign In</label>
+                </button>
+            </div>
+        </nav>
+    </header>
+    <br>
+    <br>
+    <br>
+    <!--Trainer-detais-popup-start-->
+    <div class="modal fade " id="trainer-info-popup" role="dialog">
+        <div class="modal-dialog">
+        
+            <!-- Trainer-detais-popup-content-->
+            <div class="modal-content " style="width: 700px; margin-left: -90px;">
+                
+                <!-- Trainer-detais-popup-header-start-->
+                <div class="modal-header">
+                    <h4 class="modal-title" style="margin-left: auto;"> Enter Trainer Details</h4> 
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Trainer-detais-popup-header-end-->
+
+                <!-- Trainer-detais-popup-body-start-->
+                <div class="modal-body">
+                    <br>
+                    <div class="container-fluid">
+                        <form>
+                            <div class="row">
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center">
+                                    <img src="abc.png" alt="" width="100px" height="100px">
+                                </div>
+                                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 ">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                            <label for="inputEmail4">Email</label>
+                                            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                            <label for="inputPassword4">Password</label>
+                                            <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputAddress">Address</label>
+                                            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main S      t">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputAddress2">Address 2</label>
+                                            <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                            <label for="inputCity">City</label>
+                                            <input type="text" class="form-control" id="inputCity">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                            <label for="inputState">State</label>
+                                            <select id="inputState" class="form-control">
+                                                <option selected>Choose...</option>
+                                                <option value="Maharashtra">Maharashtra</option>
+                                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                                <option value="Delhi">Delhi</option>
+                                                <option value="M.P.">M.P.</option>
+                                            </select>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                            <label for="inputZip">Zip</label>
+                                            <input type="text" class="form-control" id="inputZip">
+                                            </div>
+                                        </div>
+                                        <div id="cource-input-holder">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-7">
+                                            <label for="inputCity">Cources</label>
+                                                <select id="inputState" class="form-control">
+                                                    <option selected>Choose Cource...</option>
+                                                    <option value="Java">Java</option>
+                                                    <option value="Python">Python</option>
+                                                    <option value="Node">Node</option>
+                                                    <option value="Spring">Spring</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="inputState">Fee</label>
+                                                <input type="number" class="form-control" placeholder="$">
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label for="add-more-button">Add</label>
+                                                <button type="button" class="form-control" id="add-more-button"><span class="fa fa-plus"></span></button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save  </button>
+                                </div>
+                            </div>
+                        </form>       
+                    </div>
+                    <br>
+                </div>
+                <!-- Trainer-detais-popup-body-end-->
+
+                <!-- Trainer-detais-popup-footer-start-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default float-right" data-dismiss="modal">Close</button>
+                </div>
+                <!-- Trainer-detais-popup-footer-end-->
+            </div>
+            <!-- Trainer-detais-popup-content-end-->
+        </div>
+    </div>
+    <!--Trainer-detais-popup-end-->
+
+    <section class="loginSection bg-light" id="welcomeDiv">
+        <div class="container">
+            <div class="d-flex row justify-content-center">
+                <div class="card shadow-lg p-3 mb-5 bg-light rounded my-5" style="height: 500px;">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs nav-justified">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="signIn-tab" data-toggle="tab" href="#signIn" role="tab" aria-controls="signIn" aria-selected="true">
+                                    Sign In
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " id="signUp-tab" data-toggle="tab" href="#signUp" role="tab" aria-controls="signUp" aria-selected="false">
+                                    Sign Up
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active p-3" id="signIn" role="tabpanel" aria-labelledby="signIn-tab">
+                                <form name="signInForm"> 
+                                    <div class="text-center form-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-user"></i>
+                                            </span>
+                                            <input type="text" id="username" placeholder="Username" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="text-center form-group ">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-key"></i>
+                                            </span>
+                                            <input type="password" id="password" placeholder="Password" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group text-center">
+                                        <input type="submit" value="login" role="submit" class="btn btn-primary">
+                                    </div>
+                                    <div class="row">
+                                        <label class="mr-auto"> <input type="checkbox" value="rememberMe"> Remember Me</label>
+                                        <a href="#" class="pull-right">Forgot Password?</a>
+                                    </div>
+                                </form>           
+                            </div>
+                            <div class="tab-pane fade p-3" id="signUp" role="tabpanel" aria-labelledby="signUp-tab">
+                                <form>
+                                    <div class="text-center form-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-user-circle"></i>
+                                            </span>
+                                            <input type="text" id="name" placeholder="Name" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="text-center form-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-user"></i>
+                                            </span>
+                                            <input type="text" id="username" placeholder="Username" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="text-center form-group ">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-key"></i>
+                                            </span>
+                                            <input type="password" id="password" placeholder="Password" class="form-control">
+                                        </div>
+                                    </div>
+                                    <input type="checkbox" name="vehicle1" value="trainer" data-toggle="modal" data-target="#trainer-info-popup"> I am a trainer<br>
+                                    <div class="form-group text-center">
+                                        <input type="submit" value="Sign Up" role="button" class="btn btn-primary">
+                                    </div>
+                                </form>                  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <p>or connect with</p>
+                            </div>
+                            <div class="row ">
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-center">
+                                    <a href="#"> <span class="fab fa-2x fa-google-plus"></span> </a>
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-center">
+                                    <a href="#"> <span class="fab fa-2x fa-facebook-f"></span></a>
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-center">
+                                    <a href="#"> <span class="fab fa-2x fa-twitter-square"></span> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="footer font-small blue pt-4 bg-secondary text-light">
+
+        <!-- Footer Links -->
+        <div class="container-fluid text-center text-md-left">
+    
+        <!-- Grid row -->
+        <div class="row">
+    
+            <!-- Grid column -->
+            <div class="col-md-6 mt-md-0 mt-3">
+    
+                <!-- Content -->
+                <h5 class="text-uppercase">My Footer</h5>
+                <p>
+                    A jumbotron indicates a big box for calling extra attention to some special content or information.
+                    A jumbotron is displayed as a grey box with rounded corners. It also enlarges the font sizes of the text inside it.
+                    Tip: Inside a jumbotron you can put nearly any valid HTML, including other Bootstrap elements/classes.
+                    Use a div element with class .jumbotron to create a jumbotron:.
+                </p>
+    
+            </div>
+            <!-- Grid column -->
+    
+            <hr class="clearfix w-100 d-md-none pb-3">
+    
+            <!-- Grid column -->
+            <div class="col-md-3 mb-md-0 mb-3">
+    
+                <!-- Links -->
+                <h5 class="text-uppercase">Follow Us On</h5>
+    
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="#" class="text-dark"><span class="fab fa-facebook"></span> Facebook</a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-dark"><span class="fab fa-google"></span> Google</a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-dark"><span class="fab fa-twitter"></span> Twitter</a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-dark"><span class="fab fa-git"></span> GitHub</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Grid column -->
+    
+            <!-- Grid column -->
+            <div class="col-md-3 mb-md-0 mb-3">
+    
+                <!-- Links -->
+                <h5 class="text-uppercase">Join Us On</h5>
+    
+                <ul class="list-unstyled">
+                <li>
+                    <a href="#" class="text-dark"><span class="fab fa-tumblr-square"></span> Tumbler</a>
+                </li>
+                <li>
+                    <a href="#" class="text-dark"><span class="fab fa-medium"></span> Medium</a>
+                </li>
+                <li>
+                    <a href="#" class="text-dark"><span class="fab fa-soundcloud"></span> Soundcloud</a>
+                </li>
+                <li>
+                    <a href="#" class="text-dark"><span class="fab fa-wordpress"></span> Wordpress</a>
+                </li>
+                </ul>
+            </div>
+            <!-- Grid column -->
+    
+        </div>
+        <!-- Grid row -->
+        </div>
+        <!-- Footer Links -->
+        
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2019 Copyright:
+            <a href="#" class="text-dark">MySite</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+</body>
+</html>    

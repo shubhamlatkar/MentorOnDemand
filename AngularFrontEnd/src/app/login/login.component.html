@@ -1,0 +1,102 @@
+<section class="loginSection bg-light" id="welcomeDiv">
+    <div class="container">
+        <div class="d-flex row justify-content-center">
+            <div class="card shadow-lg p-3 mb-5 bg-light rounded my-5" style="height: 475px;">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs nav-justified">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="signIn-tab" data-toggle="tab" href="#signIn" role="tab" aria-controls="signIn" aria-selected="true">
+                                Sign In
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " id="signUp-tab" data-toggle="tab" href="#signUp" role="tab" aria-controls="signUp" aria-selected="false">
+                                Sign Up
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active p-3" id="signIn" role="tabpanel" aria-labelledby="signIn-tab">
+                            <form name="signInForm" #loginInForm=ngForm (ngSubmit)="onLogIn(loginInForm.value)"> 
+                                <div class="text-center form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-user"></i>
+                                        </span>
+                                        <input type="text" id="username" placeholder="Username" class="form-control" name="username" ngModel>
+                                    </div>
+                                </div>
+                                <div class="text-center form-group ">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-key"></i>
+                                        </span>
+                                        <input type="password" id="password" placeholder="Password" class="form-control" name="password" ngModel>
+                                    </div>
+                                </div>
+                                <div class="form-group text-center">
+                                    <input type="submit" value="login" id="LogIn" role="button" class="btn btn-primary">
+                                </div>
+                                <div class="row">
+                                    <label class="mr-auto"> <input type="checkbox" value="rememberMe"> Remember Me</label>
+                                    <a href="#" class="pull-right">Forgot Password?</a>
+                                </div>
+                            </form>           
+                        </div>
+                        <div class="tab-pane fade p-3" id="signUp" role="tabpanel" aria-labelledby="signUp-tab">
+                            <form name="SignUpForm" #signUpInForm=ngForm (ngSubmit)="onSignUp(signUpInForm.value)">
+                                <div class="text-center form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-user-circle"></i>
+                                        </span>
+                                        <input type="text" id="name" placeholder="Name" class="form-control" name="name" ngModel>
+                                    </div>
+                                </div>
+                                <div class="text-center form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-user"></i>
+                                        </span>
+                                        <input type="text" id="username" placeholder="Username" class="form-control" name="username" ngModel>
+                                    </div>
+                                </div>
+                                <div class="text-center form-group ">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-key"></i>
+                                        </span>
+                                        <input type="password" id="password" placeholder="Password" class="form-control" name="password" ngModel >
+                                    </div>
+                                </div>
+                                <div class="form-group text-center">
+                                    <input type="submit" value="sign up" role="button" class="btn btn-primary">
+                                </div>
+                            </form>                  
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <p>or connect with</p>
+                        </div>
+                        <div class="row ">
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-center">
+                                <a href="#"> <span class="fa fa-2x fa-google-plus"></span> </a>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-center">
+                                <a href="#"> <span class="fa fa-2x fa-facebook-f"></span></a>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-center">
+                                <a href="#"> <span class="fa fa-2x fa-twitter-square"></span> </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </div>
+</section>
