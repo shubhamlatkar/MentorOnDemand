@@ -14,26 +14,26 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.project.Training.Dao.StudentDao;
 import com.project.Training.Dao.TrainingDao;
-import com.project.Training.Dto.AllTrainingDTO;
+import com.project.Training.Dao.TrainingsDao;
 import com.project.Training.Dto.EnrollForCourceDTO;
 import com.project.Training.Dto.TrainingDto;
 import com.project.Training.model.Student;
 import com.project.Training.model.Trainer;
-import com.project.Training.model.Training;
+import com.project.Training.model.Trainings;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/training")
 public class TrainingController {
 	
 	@Autowired
 	TrainingDao trainingDao;
+	@Autowired
+	TrainingsDao trainingsDao;
 	
 	@Autowired
 	StudentDao studentDao;
@@ -42,7 +42,7 @@ public class TrainingController {
 	RestTemplate restTemplate;
 	
 	@GetMapping(value = "/getCources")
-	public ResponseEntity<List<TrainingDto>> getAll() {
+	public ResponseEntity<List<TrainingDto>> getCources() {
 		List<TrainingDto> trainings = new ArrayList<TrainingDto>();
 		trainingDao.findAll().forEach(data -> {
 			HttpHeaders headers = new HttpHeaders();
@@ -69,7 +69,7 @@ public class TrainingController {
 	}
 	
 	@GetMapping("/getAllTrainings")
-	public ResponseEntity<List<Training>> getAllTrainings() {
-		return ResponseEntity.ok(trainingDao.findAll());
+	public ResponseEntity<List<Trainings>> getAllTrainings() {
+		return ResponseEntity.ok(trainingsDao.findAll());
 	}
 }

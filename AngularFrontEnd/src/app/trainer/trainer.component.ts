@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Users } from '../Users';
-import { ObjectServiceService } from '../object-service.service';
 
 @Component({
   selector: 'app-trainer',

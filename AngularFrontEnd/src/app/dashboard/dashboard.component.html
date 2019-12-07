@@ -1,6 +1,6 @@
 <section class="container-fluid"  id="dashboardDiv" style="margin-top: -4px;">
     <div class="row">
-        <div class="col-sm-12" *ngIf="user.role == 0">
+        <div class="col-sm-12" *ngIf="user.role == ''">
         <!-- <div class="col-sm-12" >     -->
             <nav class="navbar navbar-expand-lg navbar-primary bg-primary" style="margin-left: -15px; margin-right: -15px;">
                 <a class="navbar-brand text-dark" href="#" id="sideBarButton"><h3> <span class="fa fa-bars"></span> Trainers</h3></a>
@@ -236,7 +236,7 @@
                 
 
             <section class="container" id="trainerProfiles">
-                <div *ngFor="let i of names | paginate: { itemsPerPage:5, currentPage: p} | trainerFilter: searchTerm">
+                <div *ngFor="let i of cources | paginate: { itemsPerPage:5, currentPage: p} | trainerFilter: searchTerm">
                     <br>
                     <div class="card">
                         <div class="card-header badge-info"><h4>{{ i.mentorName }}</h4></div>
@@ -264,7 +264,7 @@
                                                 <h6 class="text-light">{{ i.skills[0].name }}</h6>
                                             </div>
                                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                                <h6 class="text-light">{{ i.completed }}</h6>
+                                                <h6 class="text-light">{{ i.isCompleted }}</h6>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -302,13 +302,13 @@
             <br>
             <br>
         </div>
-        <div class="col-sm-12" *ngIf="user.role == 3">
+        <div class="col-sm-12" *ngIf="user.role == 'TRAINER'">
             <app-trainer></app-trainer>  
         </div>  
-        <div class="col-sm-12" *ngIf="user.role == 1">
+        <div class="col-sm-12" *ngIf="user.role == 'ADMIN'">
             <app-admin></app-admin>
         </div>
-        <div class="col-sm-12" *ngIf="user.role == 2">
+        <div class="col-sm-12" *ngIf="user.role == 'USER'">
             <app-user></app-user>
         </div>
     </div>

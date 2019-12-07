@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ObjectServiceService } from '../object-service.service';
-import { Users } from '../Users';
+import { ObjectServiceService } from '../Services/object-service.service';
+import { User } from '../Models/User';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +10,7 @@ import { Users } from '../Users';
 
 export class HeaderComponent implements OnInit {
 
-  public tem: Users;
+  public tem: User;
 
   public signInButtonText: string;
   constructor() { }

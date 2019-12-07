@@ -10,10 +10,7 @@ export class AppComponent {
   title = 'angular-evaluation-app';
   
   constructor(private http: HttpClient) {
-    // this.http.get("http://localhost:8080/get").subscribe(data=>{
-
-    //  console.log(data);
-    // })
+    localStorage.setItem('role', "none");
   }
 
 }

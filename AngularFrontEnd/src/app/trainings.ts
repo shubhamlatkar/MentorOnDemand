@@ -1,5 +1,4 @@
-export interface Trainings
- {
+export interface Trainings {
     id: number,
     name: string,
     mentorId: number,
