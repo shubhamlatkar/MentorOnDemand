@@ -1,5 +1,5 @@
 .metadata/*
-./AngularFrontEnd/package-log.json
+./AngularFrontEnd/package-lock.json
 ./AngularFrontEnd/node_modules/*
 */target/*
 
