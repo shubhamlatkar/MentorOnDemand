@@ -86,5 +86,10 @@ public class UserController {
 	@GetMapping("/getPayments")
 	public List<Payments> getPayments() {
 		return paymentDao.findAll();
-	}
-}
+    }
+    
+    @GetMapping("/users")
+    public List<User> getUsers() {
+        return userDao.findAll();
+    }
+}   
