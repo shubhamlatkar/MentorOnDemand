@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.project.User.Dao.NotificationDao;
-import com.project.User.Dao.NotificationsDao;
+import com.project.User.Dao.NoSpring boot crud operations example with hibernate - HowToDoInJavatificationsDao;
 import com.project.User.Dao.PaymentsDao;
 import com.project.User.Dao.UserDao;
 import com.project.User.model.Notification;
