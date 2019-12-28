@@ -3,7 +3,7 @@ Mentor On Demand
   
 It is a full stack web app designed using the angular8 as front-end adn spring-boot microservices as a backend.
 
-The front-end UI is designed using 2 frameworks:-
+The front-end UI is designed using 2 frameworks in another repo:-
   1. Angualr 8 (Folder name-AngualrFrontEnd)
   2. HTML5, CSS3, Bootstrap4, Jquery (Folder name-MySite)
  
