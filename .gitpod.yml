@@ -1,1 +1,9 @@
-{ image: { file: .gitpod.Dockerfile } }
+image:
+ file: .gitpod.Dockerfile 
+vscode:
+  extensions:
+    - Pivotal.vscode-boot-dev-pack@0.0.8:BrfHu4se+ljgyUPUU+95ig==
+    - vscjava.vscode-spring-initializr@0.4.6:WOgtgIwX3Ngy4pM9ArXjCQ==
+    - vscjava.vscode-java-pack@0.8.1:LRImBn//d5JhH4PUEI1BaQ==
+    - vscjava.vscode-spring-boot-dashboard@0.1.6:/G6fobfzYSrYZdNU7UB78g==
+    - Pivotal.vscode-spring-boot@1.13.0:rBW/SIpAjk5x4VAKYmpP/g==
