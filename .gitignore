@@ -1,5 +1,3 @@
-.metadata/*
-./AngularFrontEnd/package-lock.json
-./AngularFrontEnd/node_modules/*
-*/target/*
-
+***/target/
+**/resources/**
+./.idea

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Trainer" />
+        <module name="EurekaServer" />
+        <module name="User" />
+        <module name="ApiGateway" />
+        <module name="Training" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ApiGateway" target="1.8" />
+      <module name="EurekaServer" target="1.8" />
+      <module name="Trainer" target="1.8" />
+      <module name="Training" target="1.8" />
+      <module name="User" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ApiGateway" options="-parameters" />
+      <module name="EurekaServer" options="-parameters" />
+      <module name="Trainer" options="-parameters" />
+      <module name="Training" options="-parameters" />
+      <module name="User" options="-parameters" />
+    </option>
+  </component>
+</project>
