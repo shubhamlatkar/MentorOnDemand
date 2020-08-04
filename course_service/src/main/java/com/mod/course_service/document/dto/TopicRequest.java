@@ -2,8 +2,12 @@ package com.mod.course_service.document.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mongodb.lang.NonNull;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 public class TopicRequest {
+//    @MongoId(FieldType.OBJECT_ID)
+//    private String id;
 
     @NonNull
     private String name;

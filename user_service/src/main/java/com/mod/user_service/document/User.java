@@ -1,53 +1,38 @@
 package com.mod.user_service.document;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 @Document
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     @Id
     private String id;
-    private String name;
+    @NotNull
+    @Indexed(unique = true)
+    private String username;
+    @NotNull
+    @Email
     private String email;
+    @NotNull
+    private String mobile;
+    @NotNull
+    private String fullName;
 
-    public User() {
-    }
-
-    public User(String name, String email) {
-        this.name = name;
+    public User(@NotNull String username, @NotNull @Email String email, @NotNull String mobile, @NotNull String fullName) {
+        this.username = username;
         this.email = email;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        this.mobile = mobile;
+        this.fullName = fullName;
     }
 }

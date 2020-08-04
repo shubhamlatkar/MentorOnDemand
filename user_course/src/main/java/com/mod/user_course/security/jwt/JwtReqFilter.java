@@ -56,7 +56,6 @@ public class JwtReqFilter extends OncePerRequestFilter {
         } else if (cookieJWT != null) {
             username = jwtTokenUtil.getUsernameFromToken(cookieJWT);
         }
-
         Login user = loginRepository.findByUsername(username).orElse(null);
         String finalJwt = jwt;
         if (user != null) {

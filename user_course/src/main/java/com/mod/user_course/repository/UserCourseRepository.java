@@ -8,8 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserCourseRepository extends MongoRepository<UserCourse, String> {
-    public Optional<UserCourse> findByName(String name);
+    public Optional<UserCourse> findByUsername(String username);
 
     @Query("{'courses.title': {$eq: ?0}}")
     public Optional<List<UserCourse>> findByCourseTitle(String courseTitle);
+
 }

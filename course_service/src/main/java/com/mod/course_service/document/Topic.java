@@ -1,29 +1,22 @@
 package com.mod.course_service.document;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
 public class Topic {
-    @Id
-    private String id;
     private String name;
-    private Boolean isCompleted;
+    @JsonFormat
+    private Boolean completed;
 
     public Topic() {
     }
 
-    public Topic(String name, Boolean isCompleted) {
+    public Topic(String name, Boolean completed) {
         this.name = name;
-        this.isCompleted = isCompleted;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        this.completed = completed;
     }
 
     public String getName() {
@@ -35,19 +28,18 @@ public class Topic {
     }
 
     public Boolean getCompleted() {
-        return isCompleted;
+        return completed;
     }
 
     public void setCompleted(Boolean completed) {
-        isCompleted = completed;
+        this.completed = completed;
     }
 
     @Override
     public String toString() {
         return "Topic{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", isCompleted=" + isCompleted +
+                "name='" + name + '\'' +
+                ", completed=" + completed +
                 '}';
     }
 }
