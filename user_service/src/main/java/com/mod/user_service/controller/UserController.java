@@ -1,16 +1,10 @@
 package com.mod.user_service.controller;
 
-import com.mod.user_service.document.User;
 import com.mod.user_service.document.payload.request.UserDto;
-import com.mod.user_service.repository.UserRepository;
 import com.mod.user_service.service.HandlerService;
-import com.mod.user_service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,12 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/user/")
 public class UserController {
 
-    private final UserService userService;
     private final HandlerService handlerService;
 
     @Autowired
-    public UserController(UserService userService, HandlerService handlerService) {
-        this.userService = userService;
+    public UserController(HandlerService handlerService) {
         this.handlerService = handlerService;
     }
 

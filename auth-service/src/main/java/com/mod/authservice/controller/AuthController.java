@@ -1,9 +1,7 @@
 package com.mod.authservice.controller;
 
 
-import com.mod.authservice.document.auth.Authorities;
 import com.mod.authservice.document.auth.Login;
-import com.mod.authservice.document.auth.Role;
 import com.mod.authservice.document.request.JwtResponse;
 import com.mod.authservice.document.request.LoginRequest;
 import com.mod.authservice.document.request.SignupRequest;

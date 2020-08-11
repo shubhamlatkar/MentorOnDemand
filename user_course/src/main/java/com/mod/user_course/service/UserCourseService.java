@@ -52,17 +52,13 @@ public class UserCourseService {
     public ResponseEntity<?> addCourse(String title) {
         ResponseEntity<Course> courseResponse = restTemplate.getForEntity("http://COURSE-SERVICE/course/" + title, Course.class);
         Course course = null;
-
         if (courseResponse.getBody() != null)
             course = courseResponse.getBody();
-
         UserCourse user = userCourseRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null);
-
         if (user != null && course != null) {
             user.addCourse(course);
             return ResponseEntity.ok(userCourseRepository.save(user));
         }
-
         return ResponseEntity.notFound().build();
     }
 
@@ -86,7 +82,8 @@ public class UserCourseService {
             });
             found.setCourses(foundCourses);
         });
-        return ResponseEntity.ok(userCourseRepository.saveAll(courses));
+        userCourseRepository.saveAll(courses);
+        return ResponseEntity.ok("Saved");
     }
 
     public ResponseEntity<?> deleteCourseTrainer(String title) {

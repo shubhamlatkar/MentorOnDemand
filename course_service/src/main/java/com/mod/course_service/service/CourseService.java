@@ -2,10 +2,15 @@ package com.mod.course_service.service;
 
 import com.mod.course_service.document.Course;
 import com.mod.course_service.repository.CourseRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -13,6 +18,8 @@ import java.util.List;
 public class CourseService {
 
     public final CourseRepository courseRepository;
+    @Autowired
+    private RestTemplate restTemplate;
 
     public CourseService(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
@@ -34,6 +41,16 @@ public class CourseService {
         if (found != null) {
             courseRepository.delete(found);
             //make a call tho course-user service
+            HttpHeaders headers = new HttpHeaders();
+            jwt = "Bearer " + jwt;
+            headers.add("Authorization", jwt);
+            HttpEntity<String> entity = new HttpEntity<>("delete", headers);
+            ResponseEntity<String> result = restTemplate.exchange(
+                    "http://USER-COURSE-SERVICE/user-course/course/",
+                    HttpMethod.DELETE,
+                    entity,
+                    String.class
+            );
             return ResponseEntity.ok("deleted...");
         } else
             return ResponseEntity.notFound().build();
@@ -53,6 +70,16 @@ public class CourseService {
         if (found != null) {
             course.setId(found.getId());
             //make a call tho course-user service
+            HttpHeaders headers = new HttpHeaders();
+            jwt = "Bearer " + jwt;
+            headers.add("Authorization", jwt);
+            HttpEntity<Course> entity = new HttpEntity<>(course, headers);
+            ResponseEntity<String> result = restTemplate.exchange(
+                    "http://USER-COURSE-SERVICE/user-course/course/",
+                    HttpMethod.PUT,
+                    entity,
+                    String.class
+            );
             return ResponseEntity.ok(courseRepository.save(course));
         }
         return ResponseEntity.notFound().build();
@@ -67,4 +94,5 @@ public class CourseService {
         Course found = courseRepository.findByTitle(title).orElse(null);
         return found != null ? ResponseEntity.ok(found.getTopics()) : ResponseEntity.notFound().build();
     }
+
 }

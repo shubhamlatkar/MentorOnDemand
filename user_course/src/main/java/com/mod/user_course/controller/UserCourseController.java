@@ -1,10 +1,10 @@
 package com.mod.user_course.controller;
 
+import com.mod.user_course.document.Course;
 import com.mod.user_course.service.UserCourseService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/user-course/")
@@ -27,8 +27,13 @@ public class UserCourseController {
     }
 
     @PutMapping("/course/{title}")
-    public ResponseEntity<?> addCourse(HttpServletRequest httpServletRequest, @PathVariable String title) {
+    public ResponseEntity<?> addCourse(@PathVariable String title) {
         return userCourseService.addCourse(title);
+    }
+
+    @PutMapping("/course/")
+    public ResponseEntity<?> patchCourse(@RequestBody Course course) {
+        return userCourseService.patchCourse(course);
     }
 
     @PostMapping("/user/{username}")
@@ -41,10 +46,15 @@ public class UserCourseController {
         return userCourseService.deleteUser();
     }
 
-    @DeleteMapping("/course/{id}")
-    public ResponseEntity<?> deleteCourse(@PathVariable String id) {
-        return userCourseService.deleteCourse(id);
+    @DeleteMapping("/user/{title}")
+    public ResponseEntity<?> deleteCourse(@PathVariable String title) {
+        return userCourseService.deleteCourse(title);
     }
-    
+
+    @DeleteMapping("/course/{title}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINER')")
+    public ResponseEntity<?> deleteCourseTrainer(@PathVariable String title) {
+        return userCourseService.deleteCourseTrainer(title);
+    }
 
 }

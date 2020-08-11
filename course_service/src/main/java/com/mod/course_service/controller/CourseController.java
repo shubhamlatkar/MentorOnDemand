@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Objects;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/course")
@@ -37,9 +35,9 @@ public class CourseController {
         return courseService.post(course);
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping("/{title}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINER')")
-    public ResponseEntity<?> deleteCourse(HttpServletRequest httpServletRequest, @RequestBody String title) {
+    public ResponseEntity<?> deleteCourse(HttpServletRequest httpServletRequest, @PathVariable String title) {
         final String authorization = httpServletRequest.getHeader("Authorization");
         String jwt = null;
         if (authorization != null && authorization.startsWith("Bearer ")) {
@@ -48,7 +46,6 @@ public class CourseController {
         }
         return ResponseEntity.badRequest().body("Unauthorized");
     }
-
 
     @PatchMapping("/")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINER')")
@@ -60,7 +57,6 @@ public class CourseController {
             return courseService.patch(course, jwt);
         }
         return ResponseEntity.badRequest().body("Unauthorized");
-
     }
 
     @GetMapping("/{title}")
