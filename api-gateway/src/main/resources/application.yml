@@ -1,0 +1,69 @@
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    instance:
+      hostname: localhost
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: course-service
+          uri: lb://COURSE-SERVICE
+          predicates:
+            - Path=/course/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: course-service
+                fallbackuri: forward:/courseFallback
+
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: user-service
+                fallbackuri: forward:/userFallback
+
+        - id: user-course-service
+          uri: lb://USER-COURSE-SERVICE
+          predicates:
+            - Path=/user-course/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: user-course-service
+                fallbackuri: forward:/userCourseFallback
+
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: auth-service
+                fallbackuri: forward:/authFallback
