@@ -1,15 +1,18 @@
 package com.mod.authservice.security.services;
 
 
+import com.mod.authservice.config.EventConfig;
 import com.mod.authservice.document.auth.Authorities;
 import com.mod.authservice.document.auth.Login;
 import com.mod.authservice.document.auth.Role;
 import com.mod.authservice.document.request.SignupRequest;
+import com.mod.authservice.document.response.EventResponse;
 import com.mod.authservice.repository.AuthoritiesRepository;
 import com.mod.authservice.repository.LoginRepository;
 import com.mod.authservice.repository.RoleRepository;
 import com.mod.authservice.security.config.PasswordConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,6 +33,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     AuthoritiesRepository authoritiesRepository;
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    private EventConfig kafkaConfig;
 
     private final PasswordConfig passwordConfig;
 
@@ -75,6 +80,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         );
         user.setRoles(roles);
         loginRepository.save(user);
+
+        kafkaConfig.ModAuth().send(MessageBuilder.withPayload(new EventResponse("signup", user, null, null)).build());
+
         return true;
     }
 

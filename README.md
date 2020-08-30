@@ -6,7 +6,7 @@
 
 # MentorOnDemand #
 Mentor On Demand Architecture diagram.
-[![Mentor-On-Demand.png](https://i.postimg.cc/Hx9Rndsq/Mentor-On-Demand.png)](https://postimg.cc/47nBFCcP)
+[![Mentor-On-Demand.png](https://i.postimg.cc/gj92K8WG/Mentor-On-Demand.png)](https://postimg.cc/0Mfvk6j4)
   
 It is a full stack web app designed using the ReactJS for front-end adn spring-boot microservices as a backend.
 

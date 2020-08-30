@@ -1,9 +1,8 @@
 package com.mod.authservice.security.jwt;
 
-import com.mod.authservice.document.auth.Login;
-import com.mod.authservice.repository.LoginRepository;
 import com.mod.authservice.security.services.UserDetailsImpl;
 import com.mod.authservice.security.services.UserDetailsServiceImpl;
+import com.mod.authservice.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,28 +16,24 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class JwtReqFilter extends OncePerRequestFilter {
 
     private final JwtTokenUtil jwtTokenUtil;
     private final UserDetailsServiceImpl userDetailsService;
-
-    private final LoginRepository loginRepository;
+    @Autowired
+    private  AuthService authService;
 
     @Autowired
-    public JwtReqFilter(JwtTokenUtil jwtTokenUtil, UserDetailsServiceImpl userDetailsService, LoginRepository loginRepository) {
+    public JwtReqFilter(JwtTokenUtil jwtTokenUtil, UserDetailsServiceImpl userDetailsService) {
         this.jwtTokenUtil = jwtTokenUtil;
         this.userDetailsService = userDetailsService;
-        this.loginRepository = loginRepository;
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException, IOException {
+    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
 
         final String authorization = httpServletRequest.getHeader("Authorization");
 
@@ -58,23 +53,8 @@ public class JwtReqFilter extends OncePerRequestFilter {
             username = jwtTokenUtil.getUsernameFromToken(cookieJWT);
         }
 
-        Login user = loginRepository.findByUsername(username).orElse(null);
-        String finalJwt = jwt;
-        if (user != null) {
-            List<String> activeTokens = user.getActiveTokens();
-            if (!activeTokens.contains(finalJwt.toString()) && username != null)
-                httpServletResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
-            if (httpServletRequest.getRequestURL().toString().contains("/logmeout")) {
-                activeTokens = activeTokens.stream().filter(token -> {
-                    boolean isTokePresent = token.toString().equals(finalJwt.toString());
-                    return !(isTokePresent);
-                }).collect(Collectors.toList());
-                user.setActiveTokens(activeTokens);
-                loginRepository.save(user);
-            } else if (httpServletRequest.getRequestURL().toString().contains("/logoutall")) {
-                user.setActiveTokens(new ArrayList<>());
-                loginRepository.save(user);
-            }
+        if(!(authService.handleRequest(username,httpServletRequest.getRequestURL().toString(),jwt))) {
+            httpServletResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "Unauthorized...");
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
