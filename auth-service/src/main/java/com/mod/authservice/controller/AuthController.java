@@ -1,9 +1,9 @@
 package com.mod.authservice.controller;
 
-import com.mod.authservice.document.request.LoginRequest;
-import com.mod.authservice.document.request.SignupRequest;
+import com.mod.authservice.document.request.*;
 import com.mod.authservice.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -47,9 +47,29 @@ public class AuthController {
         return authService.login(request);
     }
 
-    @GetMapping("/secured")
-    public ResponseEntity<?> getTest() {
+    @GetMapping("/getAll")
+    public ResponseEntity<?> getAllUsers() {
         return authService.getAllUsers();
     }
 
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteMe() {
+        authService.delete();
+        return ResponseEntity.status(HttpStatus.OK).body("Deleted.....");
+    }
+
+    @PatchMapping("/")
+    public ResponseEntity<?> patchMe(@RequestBody PatchUser patchUser) {
+        return authService.patch(patchUser);
+    }
+
+    @PutMapping("/changePwd")
+    public ResponseEntity<?> changePwd(@RequestBody ChangePwd changePwd) {
+        return authService.changePwd(changePwd);
+    }
+
+    @PutMapping("/resetPwd")
+    public ResponseEntity<?> resetPwd(@RequestBody ResetPwd resetPwd) {
+        return authService.resetPwd(resetPwd);
+    }
 }

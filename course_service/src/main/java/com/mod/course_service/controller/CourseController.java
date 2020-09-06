@@ -37,26 +37,14 @@ public class CourseController {
 
     @DeleteMapping("/{title}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINER')")
-    public ResponseEntity<?> deleteCourse(HttpServletRequest httpServletRequest, @PathVariable String title) {
-        final String authorization = httpServletRequest.getHeader("Authorization");
-        String jwt = null;
-        if (authorization != null && authorization.startsWith("Bearer ")) {
-            jwt = authorization.substring(7);
-            return courseService.delete(title, jwt);
-        }
-        return ResponseEntity.badRequest().body("Unauthorized");
+    public ResponseEntity<?> deleteCourse(@PathVariable String title) {
+        return courseService.delete(title);
     }
 
     @PatchMapping("/")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINER')")
-    public ResponseEntity<?> patchCourse(HttpServletRequest httpServletRequest, @RequestBody @Valid Course course) {
-        final String authorization = httpServletRequest.getHeader("Authorization");
-        String jwt = null;
-        if (authorization != null && authorization.startsWith("Bearer ")) {
-            jwt = authorization.substring(7);
-            return courseService.patch(course, jwt);
-        }
-        return ResponseEntity.badRequest().body("Unauthorized");
+    public ResponseEntity<?> patchCourse(@RequestBody @Valid Course course) {
+        return courseService.patch(course);
     }
 
     @GetMapping("/{title}")

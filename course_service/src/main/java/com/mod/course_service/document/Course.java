@@ -1,5 +1,8 @@
 package com.mod.course_service.document;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Document
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Course {
     @Id
     private String id;
@@ -31,9 +37,6 @@ public class Course {
     private String reviews;
 
     private List<Topic> topics;
-
-    public Course() {
-    }
 
     public Course(String mentorId, String title, String description, String duration, String fee, String lectures, String levels, String reviews) {
         this.mentorId = mentorId;
@@ -58,105 +61,9 @@ public class Course {
         this.topics = topics;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getMentorId() {
-        return mentorId;
-    }
-
-    public void setMentorId(String mentorId) {
-        this.mentorId = mentorId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-
-    public String getFee() {
-        return fee;
-    }
-
-    public void setFee(String fee) {
-        this.fee = fee;
-    }
-
-    public String getLectures() {
-        return lectures;
-    }
-
-    public void setLectures(String lectures) {
-        this.lectures = lectures;
-    }
-
-    public String getLevels() {
-        return levels;
-    }
-
-    public void setLevels(String levels) {
-        this.levels = levels;
-    }
-
-    public String getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(String reviews) {
-        this.reviews = reviews;
-    }
-
-    public List<Topic> getTopics() {
-        return topics;
-    }
-
-    public void setTopics(List<Topic> topics) {
-        this.topics = topics;
-    }
-
     public void addTopic(Topic topic) {
         if (topics == null)
             topics = new ArrayList<>();
         topics.add(topic);
-    }
-
-    @Override
-    public String toString() {
-        return "Course{" +
-                "id='" + id + '\'' +
-                ", mentorId='" + mentorId + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", duration='" + duration + '\'' +
-                ", fee='" + fee + '\'' +
-                ", lectures='" + lectures + '\'' +
-                ", levels='" + levels + '\'' +
-                ", reviews='" + reviews + '\'' +
-                ", topics=" + topics +
-                '}';
     }
 }

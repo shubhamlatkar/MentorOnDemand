@@ -18,13 +18,15 @@ public class UserDetailsImpl implements UserDetails {
     private final Set<GrantedAuthority> grantedAuthorities;
     private final String email;
     private final String id;
+    private final Long mobileNumber;
 
-    public UserDetailsImpl(String username, String password, Set<GrantedAuthority> grantedAuthorities, String email, String id) {
+    public UserDetailsImpl(String username, String password, Set<GrantedAuthority> grantedAuthorities, String email, String id, Long mobileNumber) {
         this.username = username;
         this.password = password;
         this.grantedAuthorities = grantedAuthorities;
         this.email = email;
         this.id = id;
+        this.mobileNumber = mobileNumber;
     }
 
     public static UserDetailsImpl build(Login user) {
@@ -43,7 +45,8 @@ public class UserDetailsImpl implements UserDetails {
                 user.getPassword(),
                 authorities,
                 user.getEmail(),
-                user.getId()
+                user.getId(),
+                user.getMobileNumber()
         );
     }
 
@@ -88,5 +91,9 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Long getMobileNumber() {
+        return mobileNumber;
     }
 }

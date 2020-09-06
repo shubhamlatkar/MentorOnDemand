@@ -3,8 +3,6 @@ package com.mod.course_service.security.services;
 
 import com.mod.course_service.document.auth.Authorities;
 import com.mod.course_service.document.auth.Login;
-import com.mod.course_service.document.auth.Role;
-import com.mod.course_service.document.request.SignupRequest;
 import com.mod.course_service.repository.auth.AuthoritiesRepository;
 import com.mod.course_service.repository.auth.LoginRepository;
 import com.mod.course_service.repository.auth.RoleRepository;
@@ -17,7 +15,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -56,26 +53,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         });
 
         return UserDetailsImpl.build(user);
-    }
-
-    public Boolean saveUser(SignupRequest signupRequest) {
-        if (loginRepository.existsByUsername(signupRequest.getUsername()) || loginRepository.existsByEmail(signupRequest.getEmail()))
-            return false;
-
-        List<Role> roles = signupRequest
-                .getRoles()
-                .stream()
-                .map(role -> roleRepository.findByRole(role.substring(5)).orElse(null))
-                .collect(Collectors.toList());
-
-        Login user = new Login(
-                signupRequest.getUsername(),
-                signupRequest.getEmail(),
-                passwordConfig.passwordEncoder().encode(signupRequest.getPassword())
-        );
-        user.setRoles(roles);
-        loginRepository.save(user);
-        return true;
     }
 
 }

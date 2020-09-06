@@ -1,5 +1,6 @@
 package com.mod.user_service.service;
 
+import com.mod.user_service.document.Admin;
 import com.mod.user_service.document.Trainer;
 import com.mod.user_service.document.User;
 import com.mod.user_service.document.payload.request.UserDto;
@@ -13,20 +14,27 @@ public class HandlerService {
 
     private final UserService userService;
     private final TrainerService trainerService;
+    private final AdminService adminService;
 
-    public HandlerService(UserService userService, TrainerService trainerService) {
+    public HandlerService(UserService userService, TrainerService trainerService, AdminService adminService) {
         this.userService = userService;
         this.trainerService = trainerService;
+        this.adminService = adminService;
     }
 
     public ResponseEntity<?> getUser() {
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(new SimpleGrantedAuthority("ROLE_TRAINER")))
+        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
+            return ResponseEntity.ok(adminService.get(SecurityContextHolder.getContext().getAuthentication().getName()));
+        else if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(new SimpleGrantedAuthority("ROLE_TRAINER")))
             return ResponseEntity.ok(trainerService.getTrainer(SecurityContextHolder.getContext().getAuthentication().getName()));
-        return ResponseEntity.ok(userService.getByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+        else
+            return ResponseEntity.ok(userService.getByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
     }
 
-    public ResponseEntity<?> putUser(String jwt, UserDto user) {
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(new SimpleGrantedAuthority("ROLE_TRAINER"))) {
+    public ResponseEntity<?> putUser(UserDto user) {
+        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
+            return ResponseEntity.ok(adminService.put(new Admin(null, user.getUsername(), user.getEmail(), user.getPhone(), user.getFullName(), user.getAddress())));
+        else if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(new SimpleGrantedAuthority("ROLE_TRAINER")))
             return ResponseEntity.ok(trainerService.put(new Trainer(
                     user.getUsername(),
                     user.getFullName(),
@@ -37,34 +45,12 @@ public class HandlerService {
                     user.getCompany(),
                     user.getPhone()
             )));
-        }
-        return ResponseEntity.ok(userService.put(new User(
-                SecurityContextHolder.getContext().getAuthentication().getName(),
-                user.getEmail(),
-                user.getPhone(),
-                user.getFullName()
-        )));
-    }
-
-    public ResponseEntity<?> postUser(String jwt, UserDto user) {
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(new SimpleGrantedAuthority("ROLE_TRAINER"))) {
-            return ResponseEntity.ok(trainerService.post(new Trainer(
-                    user.getUsername(),
-                    user.getFullName(),
+        else return ResponseEntity.ok(userService.put(new User(
+                    SecurityContextHolder.getContext().getAuthentication().getName(),
                     user.getEmail(),
-                    user.getDescription(),
-                    user.getExpertise(),
-                    user.getPosition(),
-                    user.getCompany(),
-                    user.getPhone()
+                    user.getPhone(),
+                    user.getFullName()
             )));
-        }
-        return ResponseEntity.ok(userService.post(new User(
-                SecurityContextHolder.getContext().getAuthentication().getName(),
-                user.getEmail(),
-                user.getPhone(),
-                user.getFullName()
-        ), jwt));
     }
 
     public ResponseEntity<?> getTrainer(String username) {

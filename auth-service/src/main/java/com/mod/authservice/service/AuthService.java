@@ -1,15 +1,19 @@
 package com.mod.authservice.service;
 
+import com.mod.authservice.bean.UserBean;
 import com.mod.authservice.config.EventConfig;
 import com.mod.authservice.document.auth.Login;
-import com.mod.authservice.document.request.JwtResponse;
-import com.mod.authservice.document.request.LoginRequest;
-import com.mod.authservice.document.request.SignupRequest;
+import com.mod.authservice.document.request.*;
 import com.mod.authservice.document.response.EventResponse;
+import com.mod.authservice.repository.AuthoritiesRepository;
 import com.mod.authservice.repository.LoginRepository;
+import com.mod.authservice.repository.RoleRepository;
+import com.mod.authservice.security.config.PasswordConfig;
 import com.mod.authservice.security.jwt.JwtTokenUtil;
 import com.mod.authservice.security.services.UserDetailsImpl;
 import com.mod.authservice.security.services.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,13 +35,22 @@ public class AuthService {
     private final UserDetailsServiceImpl userDetailsService;
     private final LoginRepository loginRepository;
     private final EventConfig eventConfig;
+    private final PasswordConfig passwordConfig;
+    private final UserBean userBean;
 
-    public AuthService(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil, UserDetailsServiceImpl userDetailsService, LoginRepository loginRepository, EventConfig eventConfig) {
+    @Autowired
+    private AuthoritiesRepository authoritiesRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+
+    public AuthService(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil, UserDetailsServiceImpl userDetailsService, LoginRepository loginRepository, EventConfig eventConfig, PasswordConfig passwordConfig, UserBean userBean) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
         this.userDetailsService = userDetailsService;
         this.loginRepository = loginRepository;
         this.eventConfig = eventConfig;
+        this.passwordConfig = passwordConfig;
+        this.userBean = userBean;
     }
 
     public Boolean handleRequest(String username, String url, String jwt) {
@@ -45,65 +59,103 @@ public class AuthService {
             List<String> activeTokens = user.getActiveTokens();
             if (!activeTokens.contains(jwt.toString()) && username != null)
                 return false;
-            if (url.contains("/logmeout")) {
+            else if (url.contains("/logmeout"))
                 logout(jwt, user);
-            } else if (url.contains("/logoutall")) {
+            else if (url.contains("/logoutall"))
                 logoutAll(user);
-            }
+            userBean.setUser(user);
+            userBean.setJwt(jwt);
         }
         return true;
     }
 
+    public void delete() {
+        loginRepository.delete(userBean.getUser());
+        eventConfig.ModAuth().send(MessageBuilder.withPayload(new EventResponse("DELETE", null, null, userBean.getUser().getUsername())).build());
+    }
+
+    public ResponseEntity<?> changePwd(ChangePwd changePwd) {
+        Login user = loginRepository.findByUsername(changePwd.getUsername()).orElse(null);
+        if (user != null && user.getPassword().equals(passwordConfig.passwordEncoder().encode(changePwd.getOldPassword()))) {
+            user.setActiveTokens(new ArrayList<>());
+            user.setPassword(passwordConfig.passwordEncoder().encode(changePwd.getNewPassword()));
+            loginRepository.save(user);
+            eventConfig.ModAuth().send(MessageBuilder.withPayload(new EventResponse("CHANGE_PWD", user, null, user.getUsername())).build());
+            return ResponseEntity.status(HttpStatus.OK).body("Updated....");
+        } else
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found.....");
+    }
+
+    public ResponseEntity<?> resetPwd(ResetPwd resetPwd) {
+        Login user = loginRepository.findByUsername(resetPwd.getUsername()).orElse(null);
+        if (user != null) {
+            user.setActiveTokens(new ArrayList<>());
+            user.setPassword(passwordConfig.passwordEncoder().encode(resetPwd.getPassword()));
+            loginRepository.save(user);
+            eventConfig.ModAuth().send(MessageBuilder.withPayload(new EventResponse("CHANGE_PWD", user, null, user.getUsername())).build());
+            return ResponseEntity.status(HttpStatus.OK).body("Updated....");
+        } else
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found.....");
+    }
+
+    public ResponseEntity<?> patch(PatchUser patchUser) {
+        Login user = loginRepository.findByUsername(patchUser.getUsername()).orElse(null);
+        if (user != null) {
+            user.setActiveTokens(new ArrayList<>());
+            user.setEmail(patchUser.getEmail());
+            user.setMobileNumber(patchUser.getMobileNumber());
+            loginRepository.save(user);
+            eventConfig.ModAuth().send(MessageBuilder.withPayload(new EventResponse("PATCH", user, null, user.getUsername())).build());
+            return ResponseEntity.status(HttpStatus.OK).body("Updated....");
+        } else
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found.....");
+    }
+
     public void logout(String finalJwt, Login user) {
-
         List<String> activeTokens = user.getActiveTokens();
-
         activeTokens = activeTokens.stream().filter(token -> {
             boolean isTokePresent = token.toString().equals(finalJwt.toString());
             return !(isTokePresent);
         }).collect(Collectors.toList());
         user.setActiveTokens(activeTokens);
         loginRepository.save(user);
-        eventConfig.ModAuth().send(MessageBuilder.withPayload(new EventResponse("logout", null, finalJwt,user.getUsername())).build());
+        eventConfig.ModAuth().send(MessageBuilder.withPayload(new EventResponse("LOGOUT", null, finalJwt, user.getUsername())).build());
     }
 
     public void logoutAll(Login user) {
         user.setActiveTokens(new ArrayList<>());
         loginRepository.save(user);
-        eventConfig.ModAuth().send(MessageBuilder.withPayload(new EventResponse("logoutAll", null, null, user.getUsername())).build());
+        eventConfig.ModAuth().send(MessageBuilder.withPayload(new EventResponse("LOGOUT_ALL", null, null, user.getUsername())).build());
     }
 
     public ResponseEntity<?> getAllUsers() {
-//        Authorities read = new Authorities("user:read");
-//        Authorities write = new Authorities("user:write");
-//        authoritiesRepository.save(read);
-//        authoritiesRepository.save(write);
+//        Authorities userRead = new Authorities("user:read");
+//        Authorities userWrite = new Authorities("user:write");
+//        authoritiesRepository.save(userRead);
+//        authoritiesRepository.save(userWrite);
+//
+//        Authorities courseRead = new Authorities("course:read");
+//        Authorities courseWrite = new Authorities("course:write");
+//        authoritiesRepository.save(courseRead);
+//        authoritiesRepository.save(courseWrite);
 //
 //        Role trainerRole = new Role("TRAINER");
 //        trainerRole.addAuthority(authoritiesRepository.findByAuthority("course:read").orElse(null));
 //        trainerRole.addAuthority(authoritiesRepository.findByAuthority("course:write").orElse(null));
 //
-//        roleRepository.save(trainerRole);
+//        Role adminRole = new Role("ADMIN");
+//        adminRole.addAuthority(authoritiesRepository.findByAuthority("course:read").orElse(null));
+//        adminRole.addAuthority(authoritiesRepository.findByAuthority("course:write").orElse(null));
+//        adminRole.addAuthority(authoritiesRepository.findByAuthority("user:read").orElse(null));
+//        adminRole.addAuthority(authoritiesRepository.findByAuthority("user:write").orElse(null));
 //
-//        Role adminRole = roleRepository.findByRole("ADMIN").orElse(null);
-//        if(adminRole != null) {
-//            adminRole.addAuthority(authoritiesRepository.findByAuthority("user:read").orElse(null));
-//            adminRole.addAuthority(authoritiesRepository.findByAuthority("user:write").orElse(null));
-//            roleRepository.save(adminRole);
-//        }
-//        Login shu = new Login("shu","shu@shu.com",passwordConfig.passwordEncoder().encode("12as"));
-//        shu.addRole(roleRepository.findByRole("ADMIN").orElse(null));
-//        loginRepository.save(shu);
+//        Role userRole = new Role("USER");
+//        userRole.addAuthority(authoritiesRepository.findByAuthority("course:read").orElse(null));
+//        userRole.addAuthority(authoritiesRepository.findByAuthority("user:read").orElse(null));
 //
-//        Login knu = new Login("knu","knu@shu.com",passwordConfig.passwordEncoder().encode("12as"));
-//        knu.addRole(roleRepository.findByRole("USER").orElse(null));
-//        loginRepository.save(knu);
-//
-//        Login ps = new Login("ps","ps@shu.com",passwordConfig.passwordEncoder().encode("12as"));
-//        ps.addRole(roleRepository.findByRole("TRAINER").orElse(null));
-//        loginRepository.save(ps);
+//        roleRepository.saveAll(Arrays.asList(trainerRole, userRole, adminRole));
 
-        return ResponseEntity.ok(loginRepository.findAll());
+        return ResponseEntity.ok(Arrays.asList(loginRepository.findAll(), roleRepository.findAll(), authoritiesRepository.findAll()));
     }
 
     public Boolean signup(SignupRequest signupRequest) {
@@ -134,10 +186,8 @@ public class AuthService {
         if (user != null) {
             user.setActiveTokens(tokens);
             loginRepository.save(user);
-            eventConfig.ModAuth().send(MessageBuilder.withPayload(new EventResponse("login", null, jwtToken, user.getUsername())).build());
+            eventConfig.ModAuth().send(MessageBuilder.withPayload(new EventResponse("LOGIN", null, jwtToken, user.getUsername())).build());
         }
-
-
         return ResponseEntity.ok(new JwtResponse(jwtToken, userDetails.getId(), userDetails.getUsername()));
     }
 }

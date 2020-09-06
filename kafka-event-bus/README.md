@@ -24,6 +24,8 @@
 
 ##### Create Kafka Topic
 - `bin/kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic ModAuth`
+- `bin/kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic ModCourse`
 
 ##### Consume from the Kafka Topic via Console
 - `bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic ModAuth --from-beginning`
+- `bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic ModCourse --from-beginning`

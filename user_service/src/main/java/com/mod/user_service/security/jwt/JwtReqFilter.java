@@ -57,22 +57,6 @@ public class JwtReqFilter extends OncePerRequestFilter {
             username = jwtTokenUtil.getUsernameFromToken(cookieJWT);
         }
 
-        Login user = loginRepository.findByUsername(username).orElse(null);
-        String finalJwt = jwt;
-        if (user != null) {
-            List<String> activeTokens = user.getActiveTokens();
-            if (!activeTokens.contains(finalJwt.toString()) && username != null)
-                httpServletResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
-            if (httpServletRequest.getRequestURL().toString().contains("/logmeout")) {
-                activeTokens = activeTokens.stream().filter(token -> {
-                    boolean isTokePresent = token.toString().equals(finalJwt.toString());
-                    return !(isTokePresent);
-                }).collect(Collectors.toList());
-                user.setActiveTokens(activeTokens);
-                loginRepository.save(user);
-            }
-        }
-
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(username);
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(

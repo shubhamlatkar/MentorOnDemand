@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/user/")
+@RequestMapping("/user")
 public class UserController {
 
     private final HandlerService handlerService;
@@ -21,14 +21,8 @@ public class UserController {
     }
 
     @PutMapping("/")
-    public ResponseEntity<?> putUser(HttpServletRequest httpServletRequest, @RequestBody UserDto user) {
-        final String authorization = httpServletRequest.getHeader("Authorization");
-        String jwt = null;
-        if (authorization != null && authorization.startsWith("Bearer ")) {
-            jwt = authorization.substring(7);
-            return handlerService.putUser(jwt, user);
-        }
-        return ResponseEntity.badRequest().body("Unauthorized");
+    public ResponseEntity<?> putUser(@RequestBody UserDto user) {
+        return handlerService.putUser(user);
     }
 
     @GetMapping("/")
@@ -40,18 +34,6 @@ public class UserController {
     public ResponseEntity<?> getUserByName(@PathVariable String name) {
         return handlerService.getTrainer(name);
     }
-
-    @PostMapping("/")
-    public ResponseEntity<?> postUser(HttpServletRequest httpServletRequest, @RequestBody UserDto user) {
-        final String authorization = httpServletRequest.getHeader("Authorization");
-        String jwt = null;
-        if (authorization != null && authorization.startsWith("Bearer ")) {
-            jwt = authorization.substring(7);
-            return handlerService.postUser(jwt, user);
-        }
-        return ResponseEntity.badRequest().body("Unauthorized");
-    }
-
 
 }
 

@@ -21,20 +21,24 @@ public class TrainerService {
 
     public Trainer put(Trainer trainer) {
         Trainer found = trainerRepository.findByUsername(trainer.getUsername()).orElse(null);
-        if (!trainerRepository.existsByUsername(trainer.getUsername()) && found != null) {
-            found.setCompany(trainer.getCompany());
-            found.setDescription(trainer.getDescription());
-            found.setEmail(trainer.getEmail());
-            found.setExperties(trainer.getExperties());
-            found.setFullName(trainer.getFullName());
-            found.setPhone(trainer.getPhone());
-            found.setPosition(trainer.getPosition());
+        if (found != null) {
+            if (trainer.getCompany() != null) found.setCompany(trainer.getCompany());
+            if (trainer.getDescription() != null) found.setDescription(trainer.getDescription());
+            if (trainer.getEmail() != null) found.setEmail(trainer.getEmail());
+            if (trainer.getExpertise() != null) found.setExpertise(trainer.getExpertise());
+            if (trainer.getFullName() != null) found.setFullName(trainer.getFullName());
+            if (trainer.getPhone() != null) found.setPhone(trainer.getPhone());
+            if (trainer.getPosition() != null) found.setPosition(trainer.getPosition());
             return trainerRepository.save(found);
         }
-        return trainerRepository.save(trainer);
+        return trainer;
     }
 
     public Trainer getTrainer(String username) {
         return trainerRepository.findByUsername(username).orElse(null);
+    }
+
+    public void delete(String username) {
+        trainerRepository.findByUsername(username).ifPresent(trainerRepository::delete);
     }
 }

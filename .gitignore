@@ -4,6 +4,7 @@
 !**/src/main/**
 !**/src/test/**
 **/data/
+**/logs/
 
 
 ### STS ###

@@ -76,12 +76,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Login user = new Login(
                 signupRequest.getUsername(),
                 signupRequest.getEmail(),
-                passwordConfig.passwordEncoder().encode(signupRequest.getPassword())
+                passwordConfig.passwordEncoder().encode(signupRequest.getPassword()),
+                signupRequest.getMobile()
         );
         user.setRoles(roles);
         loginRepository.save(user);
-
-        kafkaConfig.ModAuth().send(MessageBuilder.withPayload(new EventResponse("signup", user, null, null)).build());
+        kafkaConfig.ModAuth().send(MessageBuilder.withPayload(new EventResponse("SIGNUP", user, null, null)).build());
 
         return true;
     }

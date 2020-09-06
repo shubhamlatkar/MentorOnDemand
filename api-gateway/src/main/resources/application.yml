@@ -27,6 +27,9 @@ hystrix:
 spring:
   cloud:
     gateway:
+      httpclient:
+        connect-timeout: 20000
+        response-timeout: 50000
       routes:
         - id: course-service
           uri: lb://COURSE-SERVICE

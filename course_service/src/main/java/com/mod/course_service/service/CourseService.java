@@ -1,6 +1,8 @@
 package com.mod.course_service.service;
 
+import com.mod.course_service.config.EventConfig;
 import com.mod.course_service.document.Course;
+import com.mod.course_service.document.response.CourseEventResponse;
 import com.mod.course_service.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -9,6 +11,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,11 +21,11 @@ import java.util.List;
 public class CourseService {
 
     public final CourseRepository courseRepository;
-    @Autowired
-    private RestTemplate restTemplate;
+    private final EventConfig eventConfig;
 
-    public CourseService(CourseRepository courseRepository) {
+    public CourseService(CourseRepository courseRepository, EventConfig eventConfig) {
         this.courseRepository = courseRepository;
+        this.eventConfig = eventConfig;
     }
 
     public ResponseEntity<?> get(String filterBy, String page, String limit) {
@@ -36,25 +39,14 @@ public class CourseService {
             return ResponseEntity.ok(courseRepository.findAll());
     }
 
-    public ResponseEntity<?> delete(String title, String jwt) {
+    public ResponseEntity<?> delete(String title) {
         Course found = courseRepository.findByTitle(title).orElse(null);
         if (found != null) {
             courseRepository.delete(found);
-            //make a call tho course-user service
-            HttpHeaders headers = new HttpHeaders();
-            jwt = "Bearer " + jwt;
-            headers.add("Authorization", jwt);
-            HttpEntity<String> entity = new HttpEntity<>("delete", headers);
-            ResponseEntity<String> result = restTemplate.exchange(
-                    "http://USER-COURSE-SERVICE/user-course/course/",
-                    HttpMethod.DELETE,
-                    entity,
-                    String.class
-            );
+            eventConfig.ModAuth().send(MessageBuilder.withPayload(new CourseEventResponse("DELETE", null, title)).build());
             return ResponseEntity.ok("deleted...");
         } else
             return ResponseEntity.notFound().build();
-
     }
 
     public ResponseEntity<?> post(Course course) {
@@ -65,21 +57,11 @@ public class CourseService {
         return ResponseEntity.ok(courseRepository.save(course));
     }
 
-    public ResponseEntity<?> patch(Course course, String jwt) {
+    public ResponseEntity<?> patch(Course course) {
         Course found = courseRepository.findByTitle(course.getTitle()).orElse(null);
         if (found != null) {
             course.setId(found.getId());
-            //make a call tho course-user service
-            HttpHeaders headers = new HttpHeaders();
-            jwt = "Bearer " + jwt;
-            headers.add("Authorization", jwt);
-            HttpEntity<Course> entity = new HttpEntity<>(course, headers);
-            ResponseEntity<String> result = restTemplate.exchange(
-                    "http://USER-COURSE-SERVICE/user-course/course/",
-                    HttpMethod.PUT,
-                    entity,
-                    String.class
-            );
+            eventConfig.ModAuth().send(MessageBuilder.withPayload(new CourseEventResponse("PATCH", course, course.getTitle())).build());
             return ResponseEntity.ok(courseRepository.save(course));
         }
         return ResponseEntity.notFound().build();
