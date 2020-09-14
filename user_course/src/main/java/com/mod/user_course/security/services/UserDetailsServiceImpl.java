@@ -1,15 +1,9 @@
 package com.mod.user_course.security.services;
 
 
-
 import com.mod.user_course.document.auth.Authorities;
 import com.mod.user_course.document.auth.Login;
-import com.mod.user_course.document.auth.Role;
-import com.mod.user_course.document.request.SignupRequest;
-import com.mod.user_course.repository.auth.AuthoritiesRepository;
 import com.mod.user_course.repository.auth.LoginRepository;
-import com.mod.user_course.repository.auth.RoleRepository;
-import com.mod.user_course.security.config.PasswordConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,16 +20,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     LoginRepository loginRepository;
-    @Autowired
-    AuthoritiesRepository authoritiesRepository;
-    @Autowired
-    RoleRepository roleRepository;
 
-    private final PasswordConfig passwordConfig;
-
-    @Autowired
-    public UserDetailsServiceImpl(PasswordConfig passwordConfig) {
-        this.passwordConfig = passwordConfig;
+    public UserDetailsServiceImpl() {
     }
 
 
@@ -57,26 +42,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         });
 
         return UserDetailsImpl.build(user);
-    }
-
-    public Boolean saveUser(SignupRequest signupRequest) {
-        if (loginRepository.existsByUsername(signupRequest.getUsername()) || loginRepository.existsByEmail(signupRequest.getEmail()))
-            return false;
-
-        List<Role> roles = signupRequest
-                .getRoles()
-                .stream()
-                .map(role -> roleRepository.findByRole(role.substring(5)).orElse(null))
-                .collect(Collectors.toList());
-
-        Login user = new Login(
-                signupRequest.getUsername(),
-                signupRequest.getEmail(),
-                passwordConfig.passwordEncoder().encode(signupRequest.getPassword())
-        );
-        user.setRoles(roles);
-        loginRepository.save(user);
-        return true;
     }
 
 }

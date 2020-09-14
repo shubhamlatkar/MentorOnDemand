@@ -19,13 +19,8 @@ There are various spring-boot microservices as:-
   3. user-course -> Maintains all the functions and data of user specific course details.
   4. eureka-server -> Server for all the microservices
   5. api-gateway -> Gateway for all the microservices implementing spring security using the JWT.
+  6. auth-service -> Maintains all authentication related endpoints.
+  7. config-server -> Provides the configuration from the git repo to all microservices.
+  8. hystrix-dashboard -> Hystrix monitoring for the microservices.
+  9. kafka-event-bus -> Kafka and zookeeper running in docker-compose container.
 
-
-### In order to run the microservices don't forget to add following properties for all microservices:-
-
-- server port
-- spring application name
-- eureka service-url
-- eureka hostname=localhost
-- mongodb uri
-- jwt secret 

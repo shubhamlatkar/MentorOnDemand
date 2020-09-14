@@ -4,14 +4,13 @@ import com.mod.user_course.document.Course;
 import com.mod.user_course.document.UserCourse;
 import com.mod.user_course.repository.UserCourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserCourseService {
@@ -24,29 +23,12 @@ public class UserCourseService {
         this.userCourseRepository = userCourseRepository;
     }
 
-    public ResponseEntity<?> deleteUser() {
-        UserCourse user = userCourseRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null);
-        if (user != null) {
-            userCourseRepository.delete(user);
-            return ResponseEntity.ok().body("deleted...");
-        }
-        return ResponseEntity.notFound().build();
+    public void deleteUser(String username) {
+        userCourseRepository.findByUsername(username).ifPresent(userCourseRepository::delete);
     }
 
-    public ResponseEntity<?> deleteCourse(String title) {
-        UserCourse user = userCourseRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null);
-        if (user != null) {
-            List<Course> courses =
-                    user.getCourses();
-            user.setCourses(courses.stream().filter(course -> !course.getTitle().equals(title)).collect(Collectors.toList()));
-            userCourseRepository.save(user);
-            return ResponseEntity.ok().body("deleted...");
-        }
-        return ResponseEntity.notFound().build();
-    }
-
-    public ResponseEntity<?> putUser(String username) {
-        return ResponseEntity.ok(userCourseRepository.save(new UserCourse(username)));
+    public void putUser(String id, String username) {
+        userCourseRepository.save(new UserCourse(id, username));
     }
 
     public ResponseEntity<?> addCourse(String title) {
@@ -60,42 +42,6 @@ public class UserCourseService {
             return ResponseEntity.ok(userCourseRepository.save(user));
         }
         return ResponseEntity.notFound().build();
-    }
-
-    public ResponseEntity<?> patchCourse(Course course) {
-        List<UserCourse> courses = userCourseRepository.findByCourseTitle(course.getTitle()).orElse(null);
-        if (courses == null)
-            return ResponseEntity.notFound().build();
-        courses.forEach(found -> {
-            List<Course> foundCourses = found.getCourses();
-            foundCourses.forEach(foundCourse -> {
-                if (foundCourse.getTitle().equals(course.getTitle())) {
-                    foundCourse.setDescription(course.getDescription());
-                    foundCourse.setDuration(course.getDuration());
-                    foundCourse.setFee(course.getFee());
-                    foundCourse.setLectures(course.getLectures());
-                    foundCourse.setMentorId(course.getMentorId());
-                    foundCourse.setLevels(course.getLevels());
-                    foundCourse.setReviews(course.getReviews());
-                    foundCourse.setTopics(course.getTopics());
-                }
-            });
-            found.setCourses(foundCourses);
-        });
-        userCourseRepository.saveAll(courses);
-        return ResponseEntity.ok("Saved");
-    }
-
-    public ResponseEntity<?> deleteCourseTrainer(String title) {
-        List<UserCourse> courses = userCourseRepository.findByCourseTitle(title).orElse(null);
-        if (courses == null)
-            return ResponseEntity.notFound().build();
-        courses.forEach(found -> {
-            List<Course> foundCourses = found.getCourses();
-            foundCourses = foundCourses.stream().filter(foundCourse -> !foundCourse.getTitle().equals(title)).collect(Collectors.toList());
-            found.setCourses(foundCourses);
-        });
-        return ResponseEntity.ok(userCourseRepository.saveAll(courses));
     }
 
     public ResponseEntity<?> getCourses() {
@@ -115,5 +61,10 @@ public class UserCourseService {
         return ResponseEntity.notFound().build();
     }
 
-
+    public ResponseEntity<?> deleteCourse(String title) {
+        UserCourse userCourse = userCourseRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null);
+        if (userCourse != null && userCourse.removeCourseByTitle(title) != null)
+            return ResponseEntity.status(HttpStatus.OK).body("Deleted.....");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("NotFound....");
+    }
 }

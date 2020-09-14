@@ -3,17 +3,13 @@ package com.mod.course_service.service;
 import com.mod.course_service.config.EventConfig;
 import com.mod.course_service.document.Course;
 import com.mod.course_service.document.response.CourseEventResponse;
+import com.mod.course_service.document.response.CourseResponse;
 import com.mod.course_service.repository.CourseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -43,7 +39,12 @@ public class CourseService {
         Course found = courseRepository.findByTitle(title).orElse(null);
         if (found != null) {
             courseRepository.delete(found);
-            eventConfig.ModAuth().send(MessageBuilder.withPayload(new CourseEventResponse("DELETE", null, title)).build());
+            eventConfig.ModCourse().send(MessageBuilder.withPayload(new CourseEventResponse(
+                    "DELETE",
+                    null,
+                    null,
+                    title)).build()
+            );
             return ResponseEntity.ok("deleted...");
         } else
             return ResponseEntity.notFound().build();
@@ -61,7 +62,14 @@ public class CourseService {
         Course found = courseRepository.findByTitle(course.getTitle()).orElse(null);
         if (found != null) {
             course.setId(found.getId());
-            eventConfig.ModAuth().send(MessageBuilder.withPayload(new CourseEventResponse("PATCH", course, course.getTitle())).build());
+            System.out.println(course);
+            eventConfig.ModCourse().send(
+                    MessageBuilder.withPayload(new CourseEventResponse(
+                            "PATCH", new CourseResponse().build(course),
+                            course.getTopics(),
+                            course.getTitle()
+                    )).build()
+            );
             return ResponseEntity.ok(courseRepository.save(course));
         }
         return ResponseEntity.notFound().build();

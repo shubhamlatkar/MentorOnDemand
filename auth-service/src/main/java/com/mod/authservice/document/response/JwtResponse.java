@@ -1,4 +1,4 @@
-package com.mod.authservice.document.request;
+package com.mod.authservice.document.response;
 
 public class JwtResponse {
     private String token;

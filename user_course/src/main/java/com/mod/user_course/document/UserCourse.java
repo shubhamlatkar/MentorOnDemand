@@ -22,7 +22,8 @@ public class UserCourse {
         this.courses = courses;
     }
 
-    public UserCourse(String username) {
+    public UserCourse(String id, String username) {
+        this.id = id;
         this.username = username;
     }
 
@@ -64,5 +65,14 @@ public class UserCourse {
         if (courses == null)
             courses = new ArrayList<>();
         courses.add(course);
+    }
+
+    public Course removeCourseByTitle(String title) {
+        if (courses != null) {
+            Course found = courses.stream().filter(course -> course.getTitle().equals(title)).findFirst().orElse(null);
+            courses.remove(found);
+            return found;
+        } else
+            return null;
     }
 }

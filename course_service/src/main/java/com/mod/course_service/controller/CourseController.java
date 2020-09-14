@@ -19,7 +19,6 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-
     @GetMapping("/")
     public ResponseEntity<?> filterCourse(
             @RequestParam(required = false) String filterBy,

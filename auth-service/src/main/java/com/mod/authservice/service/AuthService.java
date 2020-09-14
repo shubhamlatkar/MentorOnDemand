@@ -5,6 +5,7 @@ import com.mod.authservice.config.EventConfig;
 import com.mod.authservice.document.auth.Login;
 import com.mod.authservice.document.request.*;
 import com.mod.authservice.document.response.EventResponse;
+import com.mod.authservice.document.response.JwtResponse;
 import com.mod.authservice.repository.AuthoritiesRepository;
 import com.mod.authservice.repository.LoginRepository;
 import com.mod.authservice.repository.RoleRepository;

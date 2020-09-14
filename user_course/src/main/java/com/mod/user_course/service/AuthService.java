@@ -1,22 +1,21 @@
-package com.mod.course_service.service;
+package com.mod.user_course.service;
 
-import com.mod.course_service.document.auth.Login;
-import com.mod.course_service.document.request.AuthEvent;
-import com.mod.course_service.repository.auth.LoginRepository;
+import com.mod.user_course.document.auth.Login;
+import com.mod.user_course.document.payload.request.AuthEvent;
+import com.mod.user_course.repository.auth.LoginRepository;
 import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
 public class AuthService {
-
     private final LoginRepository loginRepository;
+    private final UserCourseService userCourseService;
 
-    public AuthService(LoginRepository loginRepository) {
+    public AuthService(LoginRepository loginRepository, UserCourseService userCourseService) {
         this.loginRepository = loginRepository;
+        this.userCourseService = userCourseService;
     }
 
     @StreamListener(target = "ModAuth")
@@ -51,6 +50,7 @@ public class AuthService {
 
     private void delete(String username) {
         loginRepository.findByUsername(username).ifPresent(loginRepository::delete);
+        userCourseService.deleteUser(username);
     }
 
     private void logout(String jwt, String username) {
@@ -87,6 +87,7 @@ public class AuthService {
     private void signup(Login user) {
         if (!loginRepository.existsByUsername(user.getUsername())) {
             loginRepository.save(user);
+            userCourseService.putUser(user.getId(), user.getUsername());
         }
     }
 }
