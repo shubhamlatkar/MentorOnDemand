@@ -27,7 +27,7 @@ public class TrainerService {
             if (trainer.getEmail() != null) found.setEmail(trainer.getEmail());
             if (trainer.getExpertise() != null) found.setExpertise(trainer.getExpertise());
             if (trainer.getFullName() != null) found.setFullName(trainer.getFullName());
-            if (trainer.getPhone() != null) found.setPhone(trainer.getPhone());
+            if (trainer.getMobile() != null) found.setMobile(trainer.getMobile());
             if (trainer.getPosition() != null) found.setPosition(trainer.getPosition());
             return trainerRepository.save(found);
         }

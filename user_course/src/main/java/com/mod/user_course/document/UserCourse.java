@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Document
-public class UserCourse {
+public class    UserCourse {
 
     @Id
     private String id;

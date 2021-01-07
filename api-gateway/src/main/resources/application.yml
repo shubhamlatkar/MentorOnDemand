@@ -7,6 +7,11 @@ eureka:
     instance:
       hostname: localhost
 
+
+logging:
+  file:
+    name: C:/Users/91960/workspace/Mentor-On-Demand/Backend/logs/API-GATEWAY.log
+
 server:
   port: 8080
 

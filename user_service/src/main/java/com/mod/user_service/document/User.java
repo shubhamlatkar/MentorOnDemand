@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;

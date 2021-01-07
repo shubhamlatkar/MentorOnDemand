@@ -129,36 +129,6 @@ public class AuthService {
         eventConfig.ModAuth().send(MessageBuilder.withPayload(new EventResponse("LOGOUT_ALL", null, null, user.getUsername())).build());
     }
 
-    public ResponseEntity<?> getAllUsers() {
-//        Authorities userRead = new Authorities("user:read");
-//        Authorities userWrite = new Authorities("user:write");
-//        authoritiesRepository.save(userRead);
-//        authoritiesRepository.save(userWrite);
-//
-//        Authorities courseRead = new Authorities("course:read");
-//        Authorities courseWrite = new Authorities("course:write");
-//        authoritiesRepository.save(courseRead);
-//        authoritiesRepository.save(courseWrite);
-//
-//        Role trainerRole = new Role("TRAINER");
-//        trainerRole.addAuthority(authoritiesRepository.findByAuthority("course:read").orElse(null));
-//        trainerRole.addAuthority(authoritiesRepository.findByAuthority("course:write").orElse(null));
-//
-//        Role adminRole = new Role("ADMIN");
-//        adminRole.addAuthority(authoritiesRepository.findByAuthority("course:read").orElse(null));
-//        adminRole.addAuthority(authoritiesRepository.findByAuthority("course:write").orElse(null));
-//        adminRole.addAuthority(authoritiesRepository.findByAuthority("user:read").orElse(null));
-//        adminRole.addAuthority(authoritiesRepository.findByAuthority("user:write").orElse(null));
-//
-//        Role userRole = new Role("USER");
-//        userRole.addAuthority(authoritiesRepository.findByAuthority("course:read").orElse(null));
-//        userRole.addAuthority(authoritiesRepository.findByAuthority("user:read").orElse(null));
-//
-//        roleRepository.saveAll(Arrays.asList(trainerRole, userRole, adminRole));
-
-        return ResponseEntity.ok(Arrays.asList(loginRepository.findAll(), roleRepository.findAll(), authoritiesRepository.findAll()));
-    }
-
     public Boolean signup(SignupRequest signupRequest) {
         return userDetailsService.saveUser(signupRequest);
     }

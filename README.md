@@ -6,12 +6,13 @@
 
 # MentorOnDemand #
 Mentor On Demand Architecture diagram.
-[![Mentor-On-Demand.png](https://i.postimg.cc/gj92K8WG/Mentor-On-Demand.png)](https://postimg.cc/0Mfvk6j4)
+[![Mentor-On-Demand.png](https://i.postimg.cc/FHhqhrWG/Mentor-On-Demand-1-1.png)](https://postimg.cc/0Mfvk6j4)
   
 It is a full stack web app designed using the ReactJS for front-end adn spring-boot microservices as a backend.
 
 Front-end UI designed using ReactJS in another repo [here](https://github.com/shubhamlatkar/react-redux-thunk/tree/master/src/Mentor-on-demand).
-  
+
+For complete info refer [wiki](https://github.com/shubhamlatkar/mentor-on-demand-backend/wiki).
  
 There are various spring-boot microservices as:-
   1. user-service -> Maintains all the data and functions for user, trainer, admin.
@@ -23,4 +24,5 @@ There are various spring-boot microservices as:-
   7. config-server -> Provides the configuration from the git repo to all microservices.
   8. hystrix-dashboard -> Hystrix monitoring for the microservices.
   9. kafka-event-bus -> Kafka and zookeeper running in docker-compose container.
+ 10. ELK stack -> Elasticsearch, logstash, kibana with filebeat for centralize logging.
 

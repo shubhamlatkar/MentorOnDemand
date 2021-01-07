@@ -20,9 +20,9 @@ public class Trainer {
     private String expertise;
     private String position;
     private String company;
-    private Long phone;
+    private Long mobile;
 
-    public Trainer(String username, String fullName, String email, String description, String expertise, String position, String company, Long phone) {
+    public Trainer(String username, String fullName, String email, String description, String expertise, String position, String company, Long mobile) {
         this.username = username;
         this.fullName = fullName;
         this.email = email;
@@ -30,6 +30,6 @@ public class Trainer {
         this.expertise = expertise;
         this.position = position;
         this.company = company;
-        this.phone = phone;
+        this.mobile = mobile;
     }
 }

@@ -6,10 +6,12 @@ import com.mod.user_course.document.payload.request.CourseEvent;
 import com.mod.user_course.document.payload.request.CourseRequest;
 import com.mod.user_course.repository.UserCourseRepository;
 import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class CourseService {
     private final UserCourseRepository userCourseRepository;
 

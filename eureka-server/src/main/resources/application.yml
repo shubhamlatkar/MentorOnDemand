@@ -6,3 +6,10 @@ eureka:
 server:
   port: 8761
 
+spring:
+  main:
+    banner-mode: "log"
+
+logging:
+  file:
+    name: C:/Users/91960/workspace/Mentor-On-Demand/Backend/logs/EUREKA-SERVER.log

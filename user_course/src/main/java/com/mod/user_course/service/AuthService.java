@@ -4,11 +4,13 @@ import com.mod.user_course.document.auth.Login;
 import com.mod.user_course.document.payload.request.AuthEvent;
 import com.mod.user_course.repository.auth.LoginRepository;
 import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class AuthService {
     private final LoginRepository loginRepository;
     private final UserCourseService userCourseService;
